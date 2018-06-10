@@ -6,7 +6,7 @@ function init() {
     // Initialise the canvas
     c = document.getElementById("canvas");
     c.width = w = window.innerWidth;
-    c.height = h = window.innerHeight - 42;
+    c.height = h = window.innerHeight;
 
 
 
@@ -19,10 +19,40 @@ function init() {
     }
 }
 
+/**
+ * Sets up the start page and waits for input to begin the game
+ */
 function setup() {
+    // Clear the screen and create the start page
     clearScreen();
     centerText("TypeFall", -20, 36);
     centerText("Press any key to begin", 20, 24);
+    // Wait for any key press
+    window.addEventListener("keypress", startGame);
+}
+
+function startGame(e) {
+    window.removeEventListener("keypress", startGame);
+    clearScreen();
+    setInterval(process, 50);
+}
+
+function process() {
+   drawBorder();
+}
+
+function drawBorder() {
+    const THICKNESS = 36;
+
+    ctx.fillStyle = "#59C9A5";
+    ctx.fillRect(0, h - THICKNESS, w, THICKNESS);
+    ctx.fillStyle = "#56E39F";
+    ctx.fillRect(0, h - 2 * THICKNESS, w, THICKNESS);
+
+    ctx.fillStyle = "#3B2C35";
+    ctx.fillRect(0, h - 2 * THICKNESS, 300, THICKNESS);
+    ctx.fillRect(w - 300, h - 2 * THICKNESS, 300, THICKNESS);
+
 }
 
 /**
@@ -32,7 +62,7 @@ function setup() {
  * @param fontSize size of the font
  */
 function centerText(text, yOffset, fontSize) {
-        ctx.fillStyle = "#33FF00";
+        ctx.fillStyle = "#56E39F";
         ctx.font = fontSize + "px Arial";
         ctx.textBaseline = "middle";
         ctx.textAlign = "center"
@@ -41,6 +71,6 @@ function centerText(text, yOffset, fontSize) {
 }
 
 function clearScreen() {
-    ctx.fillStyle = "#000000";
+    ctx.fillStyle = "#2A1F2D";
     ctx.fillRect(0, 0, w, h);
 }
