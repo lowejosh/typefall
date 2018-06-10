@@ -11,20 +11,13 @@ html {
     font-family: 'Raleway', sans-serif;
 }
 
-.canvas {
-    width: 100%;
-    position: fixed;
-    top: 32px;
-}
-
 canvas {
-    padding-left: 190px;
     display: block;
     margin-left: auto;
     margin-right: auto;
 }
 
-.footer { 
+.footer {
     width: 100%;
     position: fixed;
     bottom: 0;
