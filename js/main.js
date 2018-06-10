@@ -34,19 +34,38 @@ function startGame() {
     startedTyping = false;
     danger = false;
 
+    let word = {text: wordList[randomNumber(0, wordList.length)], x: randomNumber(40, w - 40), y: -5};
+    activeWordList.push(word)
+
     window.removeEventListener("keypress", startGame);
     clearScreen();
-    setInterval(process, 50);
+    setInterval(process, 10);
 }
 
 function process() {
     clearScreen();
+    updateWords();
     drawScreen();
-    //updateWords();
+    tick++;
 }
 
 function drawScreen() {
     drawBorder();
+    drawWords();
+}
+
+function updateWords() {
+    for (i = 0; i < activeWordList.length; i++) {
+        if ((tick % 2) == 0) {
+            activeWordList[i].y++;
+        }
+    }
+}
+
+function drawWords() {
+    for (i = 0; i < activeWordList.length; i++) {
+        centerText(activeWordList[i].x, activeWordList[i].y, activeWordList[i].text, 0, 16, "normal", "#59C9A5");
+    }
 }
 
 // Draws the games layout
@@ -85,4 +104,8 @@ function centerText(x, y, text, yOffset, fontSize, fontStyle, color) {
 function clearScreen() {
     ctx.fillStyle = "#2A1F2D";
     ctx.fillRect(0, 0, w, h);
+}
+
+function randomNumber(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
 }
