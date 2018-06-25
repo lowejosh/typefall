@@ -52,11 +52,16 @@ function startGame() {
             if (checkForMatch()) {
                 // Add to the successful word count
                 wordCount++;
+                dangerColor = "#10572C";
+                danger = true;
+                setTimeout(function() {
+                    danger = false;
+                }, 150);
                 if ((wordCount % 10) == 0) {
                     addNewWord = true;
                 }
             } else {
-                dangerColor = "#FE6847";
+                dangerColor = "#944F20";
                 danger = true;
                 setTimeout(function() {
                     danger = false;
@@ -85,12 +90,14 @@ function startGame() {
 }
 
 function process() {
-    clearScreen();
-    updateWords();
-    drawScreen();
-}
+    // Focus on the text input
+    textInput.focus();
 
-function drawScreen() {
+    // Clear the screen
+    clearScreen();
+
+    // Update the words and border
+    updateWords();
     drawBorder();
 }
 
@@ -149,7 +156,7 @@ function drawBorder() {
 
 // Check if current words in input match any active words
 function checkForMatch() {
-    for (var i = 0; i < activeWordList.length; i++) {
+    for (let i = 0; i < activeWordList.length; i++) {
         if (textInput.value == activeWordList[i].text) {
             activeWordList[i] = new Word(wordList[randomNumber(0, wordList.length)]);
             return true;
@@ -163,8 +170,14 @@ function Word(text) {
     this.text = text;
     this.x = randomNumber(60, w - 60);
     this.y = -5;
-    this.period = randomNumber(4, 32);
-    this.speed = randomNumber(1,3);
+    this.speed = randomNumber(1,2);
+
+    //TODO MIN/MAX
+    if(this.speed > 2 / 2) {
+        this.period = randomNumber(4, 16);
+    } else {
+        this.period = randomNumber(16, 32);
+    }
 }
 
 
