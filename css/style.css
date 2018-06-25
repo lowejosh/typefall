@@ -19,6 +19,7 @@ canvas {
 
 .text-input {
     color: #3B2C35;
+    font-weight: bold;
     background-color: #5BEFA7;
     padding: 0;
     border: none;
@@ -35,3 +36,10 @@ canvas {
     right: 10px;
 }
 
+input[type="text"]{
+    color : transparent;
+    text-shadow : 0 0 0 #000;
+}
+input[type="text"]:focus{
+    outline : none;
+}
