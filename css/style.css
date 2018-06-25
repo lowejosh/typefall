@@ -1,6 +1,7 @@
 * {
     margin: 0;
     padding: 0;
+    min-width: 270px;
 }
 
 
@@ -27,7 +28,7 @@ canvas {
     outline: none;
     z-index: 101;
     position: absolute;
-    width: 500px;
+    width: 250px;
     margin: auto;
     text-align: center;
     height: 36px;
