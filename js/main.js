@@ -51,17 +51,9 @@ function endGameScreen() {
     centerText(w / 2, h / 2, "Press any key to continue", 20, 24, "normal", "#59C9A5");
 
     // Wait for any key press
-    //TODO
-    window.addEventListener("keypress", function() {
-        for (let i = 0; i < activeWordList.length; i++) {
-            activeWordList.pop(i);
-        }
-        for (let i = 0; i < pointNotes.length; i++) {
-            pointNotes.pop(i);
-        }
-    });
-
+    window.addEventListener("keypress", startGame);
 }
+
 
 
 
@@ -74,6 +66,7 @@ function endGameScreen() {
 
 function startGame() {
     // Set initial variable values
+    ctx.globalAlpha = 1;
     endGame = false;
     stopFunction = false;
     wordCount = 0;
@@ -88,6 +81,9 @@ function startGame() {
     lives = 3;
     pointNotes = [];
     textInput.style.display = "inline";
+    textInput.style.opacity = "1"
+    textInput.disabled = false;
+    textInput.focus();
 
     window.removeEventListener("keypress", startGame); // Remove the event listener for starting the game
 
@@ -95,7 +91,6 @@ function startGame() {
      document.addEventListener('keydown', function kd(e) {
         // Clear the input if enter or space is pressed
         if((e.keyCode == 32 || e.keyCode == 13) && !stopFunction) {
-            console.log(stopFunction);
             // If the word is correct
             if (checkForMatch()) {
                 // Show success color
@@ -171,7 +166,7 @@ function process() {
         drawBorder();
         drawStats();
     } else {
-        clearInterval(process);
+        clearInterval(processClock);
         endGameScreen();
     }
 }
@@ -234,7 +229,7 @@ function preEndGameProcess() {
     ctx.fillStyle = "#fd000d";
     ctx.fillRect(0,0,w,h);
     textInput.style.opacity = "0.1"
-    textInput.disabled = "true";
+    textInput.disabled = true;
 }
 
 // Draws the games layout
