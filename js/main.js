@@ -76,6 +76,7 @@ function endGameScreen() {
 
 // Game complete cash reward scene
 function gameComplete() {
+    textInput.style.display = "none";
     window.removeEventListener("keypress", gameComplete);
     ctx.globalAlpha = 0;
     ctx.fillStyle = BG_COLOR;
@@ -98,7 +99,6 @@ function gameComplete() {
     }, 100);
     setTimeout(function() {
         clearInterval(fadeOut)
-        textInput.style.display = "none";
 
         ctx.globalAlpha = 1;
         clearScreen();
@@ -114,12 +114,10 @@ function gameComplete() {
             interval = 50;
         }
 
-
         let moneyInc = setInterval(function() {
             if (moneyBuff < afterPoint) {
                 clearScreen();
                 moneyBuff+=increment;
-                console.log(afterPoint/100);
                 centerText(w / 2, h / 2, "+ $" + moneyBuff, -20, 36, "bold", PRIMARY_COLOR);
                 centerText(w / 2, h / 2, points + " points", 20, 24, "normal", PRIMARY_COLOR);
             } else {
@@ -325,6 +323,8 @@ function drawBorder() {
     ctx.fillRect(0, h - THICKNESS, w, THICKNESS); // undercoat of health
     ctx.fillStyle = PRIMARY_COLOR;
     ctx.fillRect(0, h - THICKNESS, BRACE * lives, THICKNESS); // health/status bar
+    ctx.fillStyle = "#56E39F";
+    ctx.fillRect(BRACE, h - 2 * THICKNESS, w - 2 * BRACE, THICKNESS);
 
     if (!danger) {
         ctx.fillStyle = BRACE_COLOR;
