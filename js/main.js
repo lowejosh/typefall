@@ -143,12 +143,12 @@ function startGame() {
     clearScreen();  // Clear the screen
 
     // First word
-    let word = new Word(wordList[randomNumber(0, wordList.length - 1)]);
+    let word = getNewWord();
     activeWordList.push(word);
 
     // Second word after two seconds
     setTimeout(function() {
-        let word = new Word(wordList[randomNumber(0, wordList.length - 1)]);
+        let word = getNewWord();
         activeWordList.push(word)
     }, 2000);
 
@@ -202,7 +202,7 @@ function updateWords() {
 
     // Every x wordCounts, create a new random word
     if (addNewWord) {
-        let word = new Word(wordList[randomNumber(0, wordList.length - 1)]);
+        let word = getNewWord();
         activeWordList.push(word)
         addNewWord = false;
     }
@@ -218,7 +218,7 @@ function updateWords() {
 
         // Check if it has collided with the bottom
         if ((w.y + WORD_FONT_SIZE / 2) > (h - 2 *THICKNESS) + 2) {
-            activeWordList[i] = new Word(wordList[randomNumber(0, wordList.length)]);
+            activeWordList[i] = getNewWord();
             dangerColor = "#9E3A3A";
             danger = true;
             setTimeout(function() {
@@ -299,6 +299,19 @@ function drawStats() {
 ======================================================
  */
 
+// Return a unique word object
+function getNewWord() {
+   let word = new Word(randomNumber(0, wordList.length - 1));
+   let wordUnique = false;
+   for (let i = 0; i < activeWordList.length; i++) {
+       if (word.text == activeWordList[i].text) {
+           return getNewWord();
+       }
+   }
+    return word
+}
+
+
 // Return the current words per minute
 function getWordsPerMinute() {
     if (wordCount == 0) {
@@ -321,7 +334,7 @@ function checkForMatch() {
             let addedPoints = Math.round(multiplier * activeWordList[i].text.length);
             points+=addedPoints;                                                        // add the points
             wordCount++;                                                                // record the successful word count
-            activeWordList[i] = new Word(wordList[randomNumber(0, wordList.length - 1)]);   // add a new word
+            activeWordList[i] = getNewWord();
             return true;
         }
     }
