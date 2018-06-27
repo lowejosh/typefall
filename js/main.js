@@ -54,10 +54,10 @@ function endGameScreen() {
     clearScreen();
     let alphaBuff = 0;
     let fadeIn = setInterval(function() {
-        ctx.globalAlpha = 1;
         // clear old text to stop messy overlap
-        ctx.fillStyle = BG_COLOR;
-        ctx.fillRect(0, 0, w, h - 2 * THICKNESS);
+        ctx.globalAlpha = 1;
+        centerText(w / 2, h / 2, "GAME OVER", -20, 36, "bold", BG_COLOR);
+        centerText(w / 2, h / 2, points + " points", 20, 24, "normal", BG_COLOR);
 
         alphaBuff+=0.19999;
         ctx.globalAlpha = alphaBuff;
@@ -77,28 +77,59 @@ function endGameScreen() {
 // Game complete cash reward scene
 function gameComplete() {
     window.removeEventListener("keypress", gameComplete);
-    let alphaBuff = 1;
+    ctx.globalAlpha = 0;
+    ctx.fillStyle = BG_COLOR;
     let fadeOut = setInterval(function() {
-        ctx.globalAlpha = 1;
         // clear old text to stop messy overlap
+        /*
+        ctx.globalAlpha = 1;
         ctx.fillStyle = BG_COLOR;
-        ctx.fillRect(0, 0, w, h - 2 * THICKNESS);
+        ctx.fillRect(0, 0, w, h);
 
+        // new text
         alphaBuff-=0.19999;
         ctx.globalAlpha = alphaBuff;
-        // new text
         centerText(w / 2, h / 2, "GAME OVER", -20, 36, "bold", PRIMARY_COLOR);
         centerText(w / 2, h / 2, points + " points", 20, 24, "normal", PRIMARY_COLOR);
+        */
+        ctx.globalAlpha+=0.19999;
+        ctx.fillRect(0, 0, w, h);
+
     }, 100);
     setTimeout(function() {
         clearInterval(fadeOut)
+        textInput.style.display = "none";
 
         ctx.globalAlpha = 1;
         clearScreen();
-        textInput.style.display = "none";
-        centerText(w / 2, h / 2, "+ $" + points, -20, 36, "bold", PRIMARY_COLOR);
+
+        let moneyBuff = 0;
+        let afterPoint = points;
+        let afterAccuracy = points * 1 + accuracy/100;
+
+        let interval = 10;
+        let increment = Math.round(afterPoint/100);
+        if (increment == 0) {
+            increment = 1;
+            interval = 50;
+        }
+
+
+        let moneyInc = setInterval(function() {
+            if (moneyBuff < afterPoint) {
+                clearScreen();
+                moneyBuff+=increment;
+                console.log(afterPoint/100);
+                centerText(w / 2, h / 2, "+ $" + moneyBuff, -20, 36, "bold", PRIMARY_COLOR);
+                centerText(w / 2, h / 2, points + " points", 20, 24, "normal", PRIMARY_COLOR);
+            } else {
+                clearScreen();
+                centerText(w / 2, h / 2, "+ $" + afterPoint, -20, 36, "bold", PRIMARY_COLOR);
+                centerText(w / 2, h / 2, points + " points", 20, 24, "normal", PRIMARY_COLOR);
+            }
+        }, interval);
 //    centerText(w / 2, h / 2, points + " points", 20, 24, "normal", PRIMARY_COLOR);
-*/
+
     }, 599);
 
 }
