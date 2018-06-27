@@ -8,7 +8,11 @@ const THICKNESS = 36;
 const SLOW_SPEED_DIVISOR = 580;
 const NORMAL_SPEED_DIVISOR = SLOW_SPEED_DIVISOR / 2;
 const FAST_SPEED_DIVISOR = NORMAL_SPEED_DIVISOR / 2;
-
+const BG_COLOR = "#2A1F2D";
+const PRIMARY_COLOR = "#59C9A5"
+const BRACE_COLOR = "#3B2C35";
+const CORRECT_COLOR = "#10572C";
+const INCORRECT_COLOR = "#615756";
 
 // Entry point
 function init() {
@@ -37,8 +41,8 @@ function init() {
 function setup() {
     // Clear the screen and create the start page
     clearScreen();
-    centerText(w / 2, h / 2, "TypeFall", -20, 36, "bold", "#59C9A5");
-    centerText(w / 2, h / 2, "Press any key to begin", 20, 24, "normal", "#59C9A5");
+    centerText(w / 2, h / 2, "TypeFall", -20, 36, "bold", PRIMARY_COLOR);
+    centerText(w / 2, h / 2, "Press any key to begin", 20, 24, "normal", PRIMARY_COLOR);
 
     // Wait for any key press
     window.addEventListener("keypress", startGame);
@@ -47,8 +51,19 @@ function setup() {
 function endGameScreen() {
     // Clear the screen and create the start page
     clearScreen();
-    centerText(w / 2, h / 2, "GAME OVER", -20, 36, "bold", "#59C9A5");
-    centerText(w / 2, h / 2, "Press any key to continue", 20, 24, "normal", "#59C9A5");
+    ctx.globalAlpha = 0.1;
+    let fadeIn = setInterval(function() {
+        ctx.globalAlpha+=0.2;
+        // clear old text to stop messy overlap
+        centerText(w / 2, h / 2, "GAME OVER", -20, 36, "bold", BG_COLOR);
+        centerText(w / 2, h / 2, points + " points", 20, 24, "normal", BG_COLOR);
+        // new text
+        centerText(w / 2, h / 2, "GAME OVER", -20, 36, "bold", PRIMARY_COLOR);
+        centerText(w / 2, h / 2, points + " points", 20, 24, "normal", PRIMARY_COLOR);
+    }, 100);
+    setTimeout(function() {
+       clearInterval(fadeIn);
+    }, 500);
 
     // Wait for any key press
     window.addEventListener("keypress", startGame);
@@ -94,7 +109,7 @@ function startGame() {
             // If the word is correct
             if (checkForMatch()) {
                 // Show success color
-                dangerColor = "#10572C";
+                dangerColor = CORRECT_COLOR;
                 danger = true;
                 setTimeout(function() {
                     danger = false;
@@ -105,7 +120,7 @@ function startGame() {
                 }
             } else {
                 // Show the error color
-                dangerColor = "#615756";
+                dangerColor = INCORRECT_COLOR;
                 missedWordCount++;
                 danger = true;
                 setTimeout(function() {
@@ -128,12 +143,12 @@ function startGame() {
     clearScreen();  // Clear the screen
 
     // First word
-    let word = new Word(wordList[randomNumber(0, wordList.length)]);
+    let word = new Word(wordList[randomNumber(0, wordList.length - 1)]);
     activeWordList.push(word);
 
     // Second word after two seconds
     setTimeout(function() {
-        let word = new Word(wordList[randomNumber(0, wordList.length)]);
+        let word = new Word(wordList[randomNumber(0, wordList.length - 1)]);
         activeWordList.push(word)
     }, 2000);
 
@@ -145,7 +160,6 @@ function startGame() {
     // Begin the game
     processClock = setInterval(process, 50);
 }
-
 
 
 
@@ -175,16 +189,20 @@ function updateWords() {
     // Update point notes
     for (let i = 0; i < pointNotes.length; i++) {
         ctx.fillStyle = "#604767";
-        ctx.globalAlpha = pointNotes[i].alpha;
+        if (!stopFunction) {
+            ctx.globalAlpha = pointNotes[i].alpha;
+        }
         ctx.fillText("+ " + pointNotes[i].points + "pts", pointNotes[i].x, pointNotes[i].y);
         pointNotes[i].y-=3;
         pointNotes[i].alpha = pointNotes[i].alpha < 0.2 ? pointNotes.pop(i) : pointNotes[i].alpha - 0.1;
-        ctx.globalAlpha = 1;
+        if (!stopFunction) {
+            ctx.globalAlpha = 1;
+        }
     }
 
     // Every x wordCounts, create a new random word
     if (addNewWord) {
-        let word = new Word(wordList[randomNumber(0, wordList.length)]);
+        let word = new Word(wordList[randomNumber(0, wordList.length - 1)]);
         activeWordList.push(word)
         addNewWord = false;
     }
@@ -217,7 +235,7 @@ function updateWords() {
                 }, 3000);
             }
         }
-        centerText(w.x, w.y, w.text, 0, WORD_FONT_SIZE, "normal", "#59C9A5");
+        centerText(w.x, w.y, w.text, 0, WORD_FONT_SIZE, "normal", PRIMARY_COLOR);
     }
 }
 
@@ -239,11 +257,11 @@ function drawBorder() {
 
     ctx.fillStyle = "#3A1515";
     ctx.fillRect(0, h - THICKNESS, w, THICKNESS); // undercoat of health
-    ctx.fillStyle = "#59C9A5";
+    ctx.fillStyle = PRIMARY_COLOR;
     ctx.fillRect(0, h - THICKNESS, BRACE * lives, THICKNESS); // health/status bar
 
     if (!danger) {
-        ctx.fillStyle = "#3B2C35";
+        ctx.fillStyle = BRACE_COLOR;
     } else {
         ctx.fillStyle = dangerColor;
     }
@@ -256,13 +274,13 @@ function drawStats() {
     let ts = formatTime(Math.round(seconds % 60));
     let tm = formatTime(Math.round(seconds / 60));
 
-    ctx.fillStyle = lives < 3 ? "#59C9A5" : "#3B2C35"; // Change text color if health bar is further than text
+    ctx.fillStyle = lives < 3 ? PRIMARY_COLOR : BRACE_COLOR; // Change text color if health bar is further than text
 
     // Draw the elapsed time and WPM
     ctx.fillText(tm + ":" + ts, w - (40 + WORD_FONT_SIZE ), h - THICKNESS / 2);
     ctx.fillText(getWordsPerMinute() + " WPM", w - w / 5, h - THICKNESS / 2);
 
-    ctx.fillStyle = lives < 1 ? "#59C9A5" : "#3B2C35";
+    ctx.fillStyle = lives < 1 ? PRIMARY_COLOR : BRACE_COLOR;
 
     // Draw points and multiplier
     multiplier = getWordsPerMinute()/10;    // multiplier is just the wpm divided by 10
@@ -303,7 +321,7 @@ function checkForMatch() {
             let addedPoints = Math.round(multiplier * activeWordList[i].text.length);
             points+=addedPoints;                                                        // add the points
             wordCount++;                                                                // record the successful word count
-            activeWordList[i] = new Word(wordList[randomNumber(0, wordList.length)]);   // add a new word
+            activeWordList[i] = new Word(wordList[randomNumber(0, wordList.length - 1)]);   // add a new word
             return true;
         }
     }
@@ -322,7 +340,7 @@ function centerText(x, y, text, yOffset, fontSize, fontStyle, color) {
 
 // Clears the screen with a blank rectangle
 function clearScreen() {
-    ctx.fillStyle = "#2A1F2D";
+    ctx.fillStyle = BG_COLOR;
     ctx.fillRect(0, 0, w, h);
 }
 
