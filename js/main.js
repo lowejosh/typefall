@@ -102,31 +102,27 @@ function gameComplete() {
     setTimeout(function() {
         clearInterval(fadeOut)
 
-        ctx.globalAlpha = 0;
+        ctx.globalAlpha = 1;
         clearScreen();
 
         let moneyBuff = 0;
         let afterPoint = points;
 
         let interval = 10;
-        let increment = Math.round(afterPoint/100);
-        if (increment == 0) {
+        let increment = Math.round(afterPoint / 200);
+        if (increment === 0) {
             increment = 1;
             interval = 50;
         }
 
         let pointMoneyInc = setInterval(function() {
-            if (ctx.globalAlpha < 0.95) {
-                ctx.globalAlpha +=0.1;
-            } else {
-                ctx.globalAlpha = 1;
-            }
 
             if (moneyBuff < afterPoint) {
                 clearScreen();
                 moneyBuff+=increment;
                 centerText(w / 2, h / 2, "+ $" + moneyBuff, -20, 36, "bold", PRIMARY_COLOR);
                 centerText(w / 2, h / 2, points + " points", 20, 24, "normal", PRIMARY_COLOR);
+
             } else {
                 clearScreen();
                 centerText(w / 2, h / 2, "+ $" + afterPoint, -20, 36, "bold", PRIMARY_COLOR);
@@ -137,22 +133,22 @@ function gameComplete() {
                 console.log("word count " + wordCount);
                 console.log("missed word count " + missedWordCount);
 
-                let afterAccuracy = Math.round(points * (1 + accuracy/100));
+                let afterAccuracy = Math.round(points * (1 + accuracy / 100));
                 console.log("correct =  " + wordCount + " / " + (missedWordCount + wordCount));
-                console.log("increase " + 1 + accuracy/100);
+                console.log("increase " + 1 + accuracy / 100);
                 console.log("accuracy " + accuracy);
                 console.log("after accuracy " + afterAccuracy);
                 interval = 10;
-                increment = Math.round(afterAccuracy/100);
-                if (increment == 0) {
+                increment = Math.round((afterAccuracy - afterPoint) / 200);
+                if (increment === 0) {
                     increment = 1;
                     interval = 50;
                 }
-                setTimeout(function() {
-                    let accuracyMoneyInc = setInterval(function() {
+                setTimeout(function () {
+                    let accuracyMoneyInc = setInterval(function () {
                         if (moneyBuff < afterAccuracy) {
                             clearScreen();
-                            moneyBuff+=increment;
+                            moneyBuff += increment;
                             centerText(w / 2, h / 2, "+ $" + moneyBuff, -20, 36, "bold", PRIMARY_COLOR);
                             centerText(w / 2, h / 2, points + " points", 20, 24, "normal", PRIMARY_COLOR);
                             centerText(w / 2, h / 2, accuracy + "% accuracy (bonus " + accuracy + "%)", 50, 24, "normal", PRIMARY_COLOR);
@@ -467,7 +463,10 @@ function randomNumber(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-
+// does nothing
+function doNothing() {
+    // nope
+}
 
 
 /*
