@@ -301,7 +301,7 @@ function drawStats() {
 
 // Return a unique word object
 function getNewWord() {
-   let word = new Word(randomNumber(0, wordList.length - 1));
+   let word = new Word(wordList[randomNumber(0, wordList.length - 1)]);
    let wordUnique = false;
    for (let i = 0; i < activeWordList.length; i++) {
        if (word.text == activeWordList[i].text) {
