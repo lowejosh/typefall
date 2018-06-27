@@ -68,6 +68,8 @@ function endGameScreen() {
     setTimeout(function() {
         clearInterval(fadeIn);
         // Wait for any key press
+        ctx.globalAlpha = 1;
+        centerText(w / 2, h - 2 * THICKNESS - 30, "Press any key to continue", 0, 12, "normal", PRIMARY_COLOR);
         window.addEventListener("keypress", gameComplete);
     }, 599);
 
@@ -146,26 +148,25 @@ function gameComplete() {
                     increment = 1;
                     interval = 50;
                 }
-
-                let accuracyMoneyInc = setInterval(function() {
-                    if (moneyBuff < afterAccuracy) {
-                        clearScreen();
-                        moneyBuff+=increment;
-                        centerText(w / 2, h / 2, "+ $" + moneyBuff, -20, 36, "bold", PRIMARY_COLOR);
-                        centerText(w / 2, h / 2, points + " points", 20, 24, "normal", PRIMARY_COLOR);
-                        centerText(w / 2, h / 2, accuracy + "% accuracy", 60, 24, "normal", PRIMARY_COLOR);
-                    } else {
-                        clearScreen();
-                        centerText(w / 2, h / 2, "+ $" + afterAccuracy, -20, 36, "bold", PRIMARY_COLOR);
-                        centerText(w / 2, h / 2, points + " points", 20, 24, "normal", PRIMARY_COLOR);
-                        centerText(w / 2, h / 2, accuracy + "% accuracy", 50, 24, "normal", PRIMARY_COLOR);
-                        clearInterval(accuracyMoneyInc);
-                    }
-                }, interval);
+                setTimeout(function() {
+                    let accuracyMoneyInc = setInterval(function() {
+                        if (moneyBuff < afterAccuracy) {
+                            clearScreen();
+                            moneyBuff+=increment;
+                            centerText(w / 2, h / 2, "+ $" + moneyBuff, -20, 36, "bold", PRIMARY_COLOR);
+                            centerText(w / 2, h / 2, points + " points", 20, 24, "normal", PRIMARY_COLOR);
+                            centerText(w / 2, h / 2, accuracy + "% accuracy (bonus " + accuracy + "%)", 50, 24, "normal", PRIMARY_COLOR);
+                        } else {
+                            clearScreen();
+                            centerText(w / 2, h / 2, "+ $" + afterAccuracy, -20, 36, "bold", PRIMARY_COLOR);
+                            centerText(w / 2, h / 2, points + " points", 20, 24, "normal", PRIMARY_COLOR);
+                            centerText(w / 2, h / 2, accuracy + "% accuracy (bonus " + accuracy + "%)", 50, 24, "normal", PRIMARY_COLOR);
+                            clearInterval(accuracyMoneyInc);
+                        }
+                    }, interval);
+                }, 1000)
             }
         }, interval);
-//    centerText(w / 2, h / 2, points + " points", 20, 24, "normal", PRIMARY_COLOR);
-
     }, 599);
 
 }
