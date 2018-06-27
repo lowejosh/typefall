@@ -100,12 +100,11 @@ function gameComplete() {
     setTimeout(function() {
         clearInterval(fadeOut)
 
-        ctx.globalAlpha = 1;
+        ctx.globalAlpha = 0;
         clearScreen();
 
         let moneyBuff = 0;
         let afterPoint = points;
-        let afterAccuracy = points * 1 + accuracy/100;
 
         let interval = 10;
         let increment = Math.round(afterPoint/100);
@@ -114,7 +113,13 @@ function gameComplete() {
             interval = 50;
         }
 
-        let moneyInc = setInterval(function() {
+        let pointMoneyInc = setInterval(function() {
+            if (ctx.globalAlpha < 0.95) {
+                ctx.globalAlpha +=0.1;
+            } else {
+                ctx.globalAlpha = 1;
+            }
+
             if (moneyBuff < afterPoint) {
                 clearScreen();
                 moneyBuff+=increment;
@@ -124,6 +129,39 @@ function gameComplete() {
                 clearScreen();
                 centerText(w / 2, h / 2, "+ $" + afterPoint, -20, 36, "bold", PRIMARY_COLOR);
                 centerText(w / 2, h / 2, points + " points", 20, 24, "normal", PRIMARY_COLOR);
+                clearInterval(pointMoneyInc);
+
+                accuracy = Math.round((wordCount / (missedWordCount + wordCount)) * 100);
+                console.log("word count " + wordCount);
+                console.log("missed word count " + missedWordCount);
+
+                let afterAccuracy = Math.round(points * (1 + accuracy/100));
+                console.log("correct =  " + wordCount + " / " + (missedWordCount + wordCount));
+                console.log("increase " + 1 + accuracy/100);
+                console.log("accuracy " + accuracy);
+                console.log("after accuracy " + afterAccuracy);
+                interval = 10;
+                increment = Math.round(afterAccuracy/100);
+                if (increment == 0) {
+                    increment = 1;
+                    interval = 50;
+                }
+
+                let accuracyMoneyInc = setInterval(function() {
+                    if (moneyBuff < afterAccuracy) {
+                        clearScreen();
+                        moneyBuff+=increment;
+                        centerText(w / 2, h / 2, "+ $" + moneyBuff, -20, 36, "bold", PRIMARY_COLOR);
+                        centerText(w / 2, h / 2, points + " points", 20, 24, "normal", PRIMARY_COLOR);
+                        centerText(w / 2, h / 2, accuracy + "% accuracy", 60, 24, "normal", PRIMARY_COLOR);
+                    } else {
+                        clearScreen();
+                        centerText(w / 2, h / 2, "+ $" + afterAccuracy, -20, 36, "bold", PRIMARY_COLOR);
+                        centerText(w / 2, h / 2, points + " points", 20, 24, "normal", PRIMARY_COLOR);
+                        centerText(w / 2, h / 2, accuracy + "% accuracy", 50, 24, "normal", PRIMARY_COLOR);
+                        clearInterval(accuracyMoneyInc);
+                    }
+                }, interval);
             }
         }, interval);
 //    centerText(w / 2, h / 2, points + " points", 20, 24, "normal", PRIMARY_COLOR);
