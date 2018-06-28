@@ -96,6 +96,7 @@ function gameComplete() {
         let moneyBuff = 0;
         let afterPoint = points;
 
+        // === POINTS CREDITS ===
         let interval = 10;
         let increment = Math.round(afterPoint / 200);
         if (increment === 0) {
@@ -117,15 +118,9 @@ function gameComplete() {
                 centerText(w / 2, h / 2, points + " points", 20, 24, "normal", PRIMARY_COLOR);
                 clearInterval(pointMoneyInc);
 
+                // === ACCURACY CREDITS ===
                 accuracy = Math.round((wordCount / (missedWordCount + wordCount)) * 100);
-                console.log("word count " + wordCount);
-                console.log("missed word count " + missedWordCount);
-
-                let afterAccuracy = Math.round(points * (1 + (bonusAccRate(accuracy)/100)));
-                console.log("correct =  " + wordCount + " / " + (missedWordCount + wordCount));
-                console.log("increase " + 1 + accuracy / 100);
-                console.log("accuracy " + accuracy);
-                console.log("after accuracy " + afterAccuracy);
+                let afterAccuracy = Math.round(afterPoint * (1 + (bonusAccRate(accuracy)/100)));
                 interval = 10;
                 increment = Math.round((afterAccuracy - afterPoint) / 200);
                 if (increment === 0) {
@@ -146,6 +141,41 @@ function gameComplete() {
                             centerText(w / 2, h / 2, points + " points", 20, 24, "normal", PRIMARY_COLOR);
                             centerText(w / 2, h / 2, accuracy + "% accuracy (bonus " + bonusAccRate(accuracy) + "%)", 50, 24, "normal", PRIMARY_COLOR);
                             clearInterval(accuracyMoneyInc);
+
+                            // === WPM CREDITS ===
+                            accuracy = Math.round((wordCount / (missedWordCount + wordCount)) * 100);
+                            let afterWPM = Math.round(afterAccuracy * (1 + (bonusMaxWPM(maxWPM)/100)));
+                            interval = 10;
+                            increment = Math.round((afterWPM - afterAccuracy) / 200);
+                            if (increment === 0) {
+                                increment = 1;
+                                interval = 50;
+                            }
+
+                            setTimeout(function () {
+                                let wpmMoneyInc = setInterval(function () {
+                                    if (moneyBuff < afterWPM) {
+                                        clearScreen();
+                                        moneyBuff += increment;
+                                        centerText(w / 2, h / 2, "+ $" + moneyBuff, -20, 36, "bold", PRIMARY_COLOR);
+                                        centerText(w / 2, h / 2, points + " points", 20, 24, "normal", PRIMARY_COLOR);
+                                        centerText(w / 2, h / 2, accuracy + "% accuracy (bonus " + bonusAccRate(accuracy) + "%)", 50, 24, "normal", PRIMARY_COLOR);
+                                        centerText(w / 2, h / 2, maxWPM + " highest WPM (bonus " + bonusMaxWPM(maxWPM) + "%)", 80, 24, "normal", PRIMARY_COLOR);
+                                    } else {
+                                        clearScreen();
+                                        centerText(w / 2, h / 2, "+ $" + afterWPM, -20, 36, "bold", PRIMARY_COLOR);
+                                        centerText(w / 2, h / 2, points + " points", 20, 24, "normal", PRIMARY_COLOR);
+                                        centerText(w / 2, h / 2, accuracy + "% accuracy (bonus " + bonusAccRate(accuracy) + "%)", 50, 24, "normal", PRIMARY_COLOR);
+                                        centerText(w / 2, h / 2, maxWPM + " highest WPM (bonus " + bonusMaxWPM(maxWPM) + "%)", 80, 24, "normal", PRIMARY_COLOR);
+                                        clearInterval(wpmMoneyInc);
+                                        setTimeout(function() {
+                                            centerText(w / 2, h - 2 * THICKNESS - 30, "Press any key to continue", 0, 12, "normal", PRIMARY_COLOR);
+                                            window.addEventListener("keypress", startGame);
+                                        }, 1000);
+                                    }
+
+                                }, interval);
+                            }, 1000)
                         }
                     }, interval);
                 }, 1000)
@@ -482,6 +512,36 @@ function bonusAccRate(accuracy) {
         return 0; //error
     }
 }
+
+// Get max WPM bonus rate
+function bonusMaxWPM(wpm) {
+    if (wpm < 20) {
+        return 0;
+    } else if (wpm < 30) {
+        return 10;
+    } else if (wpm < 40) {
+        return 15;
+    } else if (wpm < 50) {
+        return 25;
+    } else if (wpm < 60) {
+        return 35;
+    } else if (wpm < 70) {
+        return 50;
+    } else if (wpm < 80) {
+        return 65;
+    } else if (wpm < 90) {
+        return 75;
+    } else if (wpm < 100) {
+        return 85;
+    } else if (wpm > 100) {
+        return 100;
+    } else {
+        return 0; //error
+    }
+}
+
+
+
 
 
 /*
