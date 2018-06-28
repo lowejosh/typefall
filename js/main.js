@@ -69,8 +69,10 @@ function endGameScreen() {
         clearInterval(fadeIn);
         // Wait for any key press
         ctx.globalAlpha = 1;
-        centerText(w / 2, h - 2 * THICKNESS - 30, "Press any key to continue", 0, 12, "normal", PRIMARY_COLOR);
-        window.addEventListener("keypress", gameComplete);
+        setTimeout(function() {
+            centerText(w / 2, h - 2 * THICKNESS - 30, "Press any key to continue", 0, 12, "normal", PRIMARY_COLOR);
+            window.addEventListener("keypress", gameComplete);
+        }, 1000);
     }, 599);
 
 }
@@ -119,7 +121,11 @@ function gameComplete() {
                 clearInterval(pointMoneyInc);
 
                 // === ACCURACY CREDITS ===
-                accuracy = Math.round((wordCount / (missedWordCount + wordCount)) * 100);
+                if (wordCount === 0) {
+                    accuracy = 0;
+                } else {
+                    accuracy = Math.round((wordCount / (missedWordCount + wordCount)) * 100);
+                }
                 let afterAccuracy = Math.round(afterPoint * (1 + (bonusAccRate(accuracy)/100)));
                 interval = 10;
                 increment = Math.round((afterAccuracy - afterPoint) / 200);
@@ -143,7 +149,6 @@ function gameComplete() {
                             clearInterval(accuracyMoneyInc);
 
                             // === WPM CREDITS ===
-                            accuracy = Math.round((wordCount / (missedWordCount + wordCount)) * 100);
                             let afterWPM = Math.round(afterAccuracy * (1 + (bonusMaxWPM(maxWPM)/100)));
                             interval = 10;
                             increment = Math.round((afterWPM - afterAccuracy) / 200);
@@ -212,6 +217,7 @@ function startGame() {
     pointNotes = [];
     textInput.style.display = "inline";
     textInput.style.opacity = "1"
+    textInput.value = "";
     textInput.disabled = false;
     textInput.focus();
 
@@ -434,9 +440,6 @@ function getNewWord() {
 
 // Return the current words per minute
 function getWordsPerMinute() {
-    // max wpm
-
-
     if (wordCount == 0) {
         return 0;
     } else {
