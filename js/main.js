@@ -1,5 +1,5 @@
 // Global variables
-let w, h, c, ctx, activeWordList, wordCount, danger, points, multiplier, dangerColor, addNewWord, seconds, pointNotes, lives, timer, processClock, accuracy, missedWordCount, stopFunction, endGame, credits, maxWPM;
+let w, h, c, ctx, activeWordList, wordCount, danger, points, multiplier, dangerColor, addNewWord, seconds, pointNotes, lives, timer, processClock, accuracy, missedWordCount, stopFunction, endGame, credits, maxWPM, mmProcess, singlePlayerSelected, multiPlayerSelected;
 let textInput = document.getElementById("text-input");
 let wordList = ["the","of","to","and","a","in","is","it","you","that","he","was","for","on","are","with","as","I","his","they","be","at","one","have","this","from","or","had","by","hot","word","but","what","some","we","can","out","other","were","all","there","when","up","use","your","how","said","an","each","she","which","do","their","time","if","will","way","about","many","then","them","write","would","like","so","these","her","long","make","thing","see","him","two","has","look","more","day","could","go","come","did","number","sound","no","most","people","my","over","know","water","than","call","first","who","may","down","side","been","now","find","any","new","work","part","take","get","place","made","live","where","after","back","little","only","round","man","year","came","show","every","good","me","give","our","under","name","very","through","just","form","sentence","great","think","say","help","low","line","differ","turn","cause","much","mean","before","move","right","boy","old","too","same","tell","does","set","three","want","air","well","also","play","small","end","put","home","read","hand","port","large","spell","add","even","land","here","must","big","high","such","follow","act","why","ask","men","change","went","light","kind","off","need","house","picture","try","us","again","animal","point","mother","world","near","build","self","earth","father","head","stand","own","page","should","country","found","answer","school","grow","study","still","learn","plant","cover","food","sun","four","between","state","keep","eye","never","last","let","thought","city","tree","cross","farm","hard","start","might","story","saw","far","sea","draw","left","late","run","don't","while","press","close","night","real","life","few","north","open","seem","together","next","white","children","begin","got","walk","example","ease","paper","group","always","music","those","both","mark","often","letter","until","mile","river","car","feet","care","second","book","carry","took","science","eat","room","friend","began","idea","fish","mountain","stop","once","base","hear","horse","cut","sure","watch","color","face","wood","main","enough","plain","girl","usual","young","ready","above","ever","red","list","though","feel","talk","bird","soon","body","dog","family","direct","pose","leave","song","measure","door","product","black","short","numeral","class","wind","question","happen","complete","ship","area","half","rock","order","fire","south","problem","piece","told","knew","pass","since","top","whole","king","space","heard","best","hour","better","true","during","hundred","five","remember","step","early","hold","west","ground","interest","reach","fast","verb","sing","listen","six","table","travel","less","morning","ten","simple","several","vowel","toward","war","lay","against","pattern","slow","center","love","person","money","serve","appear","road","map","rain","rule","govern","pull","cold","notice","voice","unit","power","town","fine","certain","fly","fall","lead","cry","dark","machine","note","wait","plan","figure","star","box","noun","field","rest","correct","able","pound","done","beauty","drive","stood","contain","front","teach","week","final","gave","green","oh","quick","develop","ocean","warm","free","minute","strong","special","mind","behind","clear","tail","produce","fact","street","inch","multiply","nothing","course","stay","wheel","full","force","blue","object","decide","surface","deep","moon","island","foot","system","busy","test","record","boat","common","gold","possible","plane","stead","dry","wonder","laugh","thousand","ago","ran","check","game","shape","equate","hot","miss","brought","heat","snow","tire","bring","yes","distant","fill","east","paint","language","among","grand","ball","yet","wave","drop","heart","am","present","heavy","dance","engine","position","arm","wide","sail","material","size","vary","settle","speak","weight","general","ice","matter","circle","pair","include","divide","syllable","felt","perhaps","pick","sudden","count","square","reason","length","represent","art","subject","region","energy","hunt","probable","bed","brother","egg","ride","cell","believe","fraction","forest","sit","race","window","store","summer","train","sleep","prove","lone","leg","exercise","wall","catch","mount","wish","sky","board","joy","winter","sat","written","wild","instrument","kept","glass","grass","cow","job","edge","sign","visit","soft","fun","bright","gas","weather","month","million","bear","finish","happy","hope","flower","clothe","strange","gone","jump","baby","eight","village","meet","root","buy","raise","solve","metal","whether","push","seven","paragraph","third","shall","held","hair","describe","cook","floor","either","result","burn","hill","safe","cat","century","consider","type","law","bit","coast","copy","phrase","silent","tall","sand","soil","roll","temperature","finger","industry","value","fight","lie","beat","excite","natural","view","sense","ear","else","quite","broke","case","middle","kill","son","lake","moment","scale","loud","spring","observe","child","straight","consonant","nation","dictionary","milk","speed","method","organ","pay","age","section","dress","cloud","surprise","quiet","stone","tiny","climb","cool","design","poor","lot","experiment","bottom","key","iron","single","stick","flat","twenty","skin","smile","crease","hole","trade","melody","trip","office","receive","row","mouth","exact","symbol","die","least","trouble","shout","except","wrote","seed","tone","join","suggest","clean","break","lady","yard","rise","bad","blow","oil","blood","touch","grew","cent","mix","team","wire","cost","lost","brown","wear","garden","equal","sent","choose","fell","fit","flow","fair","bank","collect","save","control","decimal","gentle","woman","captain","practice","separate","difficult","doctor","please","protect","noon","whose","locate","ring","character","insect","caught","period","indicate","radio","spoke","atom","human","history","effect","electric","expect","crop","modern","element","hit","student","corner","party","supply","bone","rail","imagine","provide","agree","thus","capital","won't","chair","danger","fruit","rich","thick","soldier","process","operate","guess","necessary","sharp","wing","create","neighbor","wash","bat","rather","crowd","corn","compare","poem","string","bell","depend","meat","rub","tube","famous","dollar","stream","fear","sight","thin","triangle","planet","hurry","chief","colony","clock","mine","tie","enter","major","fresh","search","send","yellow","gun","allow","print","dead","spot","desert","suit","current","lift","rose","continue","block","chart","hat","sell","success","company","subtract","event","particular","deal","swim","term","opposite","wife","shoe","shoulder","spread","arrange","camp","invent","cotton","born","determine","quart","nine","truck","noise","level","chance","gather","shop","stretch","throw","shine","property","column","molecule","select","wrong","gray","repeat","require","broad","prepare","salt","nose","plural","anger","claim","continent","oxygen","sugar","death","pretty","skill","women","season","solution","magnet","silver","thank","branch","match","suffix","especially","fig","afraid","huge","sister","steel","discuss","forward","similar","guide","experience","score","apple","bought","led","pitch","coat","mass","card","band","rope","slip","win","dream","evening","condition","feed","tool","total","basic","smell","valley","nor","double","seat","arrive","master","track","parent","shore","division","sheet","substance","favor","connect","post","spend","chord","fat","glad","original","share","station","dad","bread","charge","proper","bar","offer","segment","slave","duck","instant","market","degree","populate","chick","dear","enemy","reply","drink","occur","support","speech","nature","range","steam","motion","path","liquid","log","meant","quotient","teeth","shell","neck"];
 const WORD_FONT_SIZE = 16;
@@ -15,7 +15,7 @@ const CORRECT_COLOR = "#10572C";
 const INCORRECT_COLOR = "#615756";
 
 // Entry point
-function init() {
+window.onload = function init() {
     // Initialise the canvas
     c = document.getElementById("canvas");
     c.width = w = window.innerWidth;
@@ -24,7 +24,7 @@ function init() {
     // Set the context
     ctx = c.getContext("2d");
     if( c.getContext ) {
-        setup();
+        mainMenu();
     }
 }
 
@@ -45,7 +45,7 @@ function setup() {
     centerText(w / 2, h / 2, "Press any key to begin", 20, 24, "normal", PRIMARY_COLOR);
 
     // Wait for any key press
-    window.addEventListener("keypress", startGame);
+    window.addEventListener("keypress", mainMenu);
 }
 
 // Screen shown at the end of the game
@@ -175,7 +175,7 @@ function gameComplete() {
                                         clearInterval(wpmMoneyInc);
                                         setTimeout(function() {
                                             centerText(w / 2, h - 2 * THICKNESS - 30, "Press any key to continue", 0, 12, "normal", PRIMARY_COLOR);
-                                            window.addEventListener("keypress", startGame);
+                                            window.addEventListener("keypress", mainMenu);
                                         }, 1000);
                                     }
 
@@ -187,8 +187,75 @@ function gameComplete() {
             }
         }, interval);
     }, 599);
+}
+
+function mainMenu() {
+    let title = new Word("TypeFall");
+    singlePlayerSelected = true;
+    multiPlayerSelected = false;
+    title.x = w/2;
+    title.y = -36;
+    title.period = 6;
+
+    mmProcess = setInterval(function() {
+        clearScreen();
+        // Title entry animation
+        if (title.y < 2 * THICKNESS) {
+            if (title.y > THICKNESS + THICKNESS / 2) {
+                title.y+=2;
+            } else if (title.y > THICKNESS) {
+                title.y+=2.25;
+            } else {
+                title.y+=2.5;
+            }
+            title.x+=Math.sin(title.y/title.period);
+            centerText(title.x, title.y, title.text, 0, 36, "bold", PRIMARY_COLOR);
+        } else {
+            centerText(title.x, title.y, title.text, 0, 36, "bold", PRIMARY_COLOR);
+            clearInterval(mmProcess);
+            let alphaBuff = 0;
+            let fadeIn = setInterval(function() {
+                clearScreen();
+                centerText(title.x, title.y, title.text, 0, 36, "bold", PRIMARY_COLOR);
+
+                alphaBuff+=0.19999;
+                ctx.globalAlpha = alphaBuff;
+                centerText(w / 2, h / 2, "SINGLEPLAYER", -20, 36, "bold", PRIMARY_COLOR);
+                centerText(w / 2, h / 2, "MULTIPLAYER", 20, 24, "normal", PRIMARY_COLOR);
+
+                ctx.globalAlpha = 1;
+            }, 100);
+            setTimeout(function() {
+                clearInterval(fadeIn);
+                //TODO
+                centerText(w / 2, h - 2 * THICKNESS - 30, "Use ARROW KEYS and ENTER/SPACEBAR", 0, 12, "normal", PRIMARY_COLOR);
+
+                // Wait for user input
+                window.addEventListener("keydown", handleMenuInput);
+            }, 1500);
+        }
+    }, 50);
+}
+
+function handleMenuInput(e) {
+    let u = 38,
+        d = 40;
+
+    // If up arrow and sp
+    if (e.keyCode == u && )
+
+
+    // If up arrow and mp
+
+
+    // If down arrow and sp
+
+
+    // If down arrow and mp
+
 
 }
+
 
 
 
@@ -199,6 +266,9 @@ function gameComplete() {
  */
 
 function startGame() {
+    // Stop drawing mainMenu
+    clearInterval(mmProcess);
+
     // Set initial variable values
     ctx.globalAlpha = 1;
     endGame = false;
@@ -215,7 +285,6 @@ function startGame() {
     lives = 3;
     maxWPM = 0;
     pointNotes = [];
-    textInput.style.display = "inline";
     textInput.style.opacity = "1"
     textInput.value = "";
     textInput.disabled = false;
@@ -235,7 +304,13 @@ function startGame() {
     let word = getNewWord();
     activeWordList.push(word);
 
-    // Second word after two seconds
+    // Second word after a second
+    setTimeout(function() {
+        let word = getNewWord();
+        activeWordList.push(word)
+    }, 1000);
+
+    // Third word after two seconds
     setTimeout(function() {
         let word = getNewWord();
         activeWordList.push(word)
@@ -245,6 +320,9 @@ function startGame() {
     timer = setInterval(function() {
         seconds++;
     }, 1000);
+
+    drawBorder();
+    textInput.style.display = "inline";
 
     // Begin the game
     processClock = setInterval(process, 50);
@@ -459,11 +537,6 @@ function randomNumber(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-// does nothing
-function doNothing() {
-    // nope
-}
-
 // Get accuracy bonus rate
 function bonusAccRate(accuracy) {
     if (accuracy < 50) {
@@ -523,7 +596,7 @@ function kd(e) {
                 danger = false;
             }, 150);
 
-            if ((wordCount % 10) == 0) {    // If it is the tenth word success, add a new one
+            if ((wordCount % 15) == 0) {    // If it is the x word success, add a new one
                 addNewWord = true;
             }
         } else {
@@ -547,8 +620,6 @@ function ku(e) {
         }
     }
 }
-
-
 
 
 /*
@@ -580,4 +651,8 @@ function Word(text) {
     } else {
         this.period = randomNumber(16, 32);
     }
+}
+
+// Stats object TODO
+function Stats() {
 }
