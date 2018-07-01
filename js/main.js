@@ -201,7 +201,7 @@ function mainMenu(e) {
         console.log(e.keyCode);
     }
     console.log(e);
-    if (e != null && e.keyCode === 82) {
+    if (e != null && e.keyCode === 114) {
         startGame();
     } else {
         singlePlayerSelected = true;
@@ -255,6 +255,7 @@ function mainMenu(e) {
 
 function handleMenuInput(e) {
     let enter = 13,
+        space = 32,
         u = 38,
         d = 40,
         unselected = 24,
@@ -335,7 +336,7 @@ function handleMenuInput(e) {
 
     // If enter
     //TODO
-    if (e.keyCode === enter) {
+    if (e.keyCode === enter || e.keyCode === space) {
         if (singlePlayerSelected) {
             window.removeEventListener("keydown", handleMenuInput);
             startGame();
