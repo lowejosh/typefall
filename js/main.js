@@ -13,13 +13,11 @@ const PRIMARY_COLOR = "#59C9A5"
 const BRACE_COLOR = "#3B2C35";
 const CORRECT_COLOR = "#10572C";
 const INCORRECT_COLOR = "#615756";
+// local storage credits
 if(localStorage.getItem("credits") == null) {
     localStorage.setItem("credits", 0);
 }
 credits = localStorage.getItem("credits");
-
-// temp
-localStorage.clear();
 
 // Entry point
 window.onload = function init() {
@@ -241,9 +239,8 @@ function mainMenu(e) {
 
                     alphaBuff+=0.19999;
                     ctx.globalAlpha = alphaBuff;
-                    centerText(title.x, title.y + THICKNESS, "CREDITS : $" + credits, 0, 12, "normal", PRIMARY_COLOR);
                     centerText(w / 2, h / 2, "SINGLEPLAYER", -20, 36, "normal", PRIMARY_COLOR);
-                    centerText(w / 2, h / 2, "MULTIPLAYER - todo", 20, 24, "normal", PRIMARY_COLOR);
+                    centerText(w / 2, h / 2, "MULTIPLAYER", 20, 24, "normal", PRIMARY_COLOR);
 
                     ctx.globalAlpha = 1;
                 }, 100);
@@ -257,6 +254,15 @@ function mainMenu(e) {
             }
         }, 50);
     }
+}
+
+function drawMainMenu(spSize, mpSize) {
+    clearScreen();
+    centerText(title.x, title.y, title.text, 0, 36, "bold", PRIMARY_COLOR);
+
+    centerText(w / 2, h / 2, "SINGLEPLAYER", -20, spSize, "normal", PRIMARY_COLOR);
+    centerText(w / 2, h / 2, "MULTIPLAYER", 20, mpSize, "normal", PRIMARY_COLOR);
+    centerText(w / 2, h - 2 * THICKNESS - 30, "Use ARROW KEYS and ENTER/SPACEBAR", 0, 12, "normal", PRIMARY_COLOR);
 }
 
 function handleMenuInput(e) {
@@ -279,24 +285,11 @@ function handleMenuInput(e) {
         // transition multiplayer text to smaller and singleplayer text to bigger
         let menuSwitch = setInterval(function() {
             if (usBuff !== unselected && sBuff !== selected) {
-                clearScreen();
-                centerText(title.x, title.y, title.text, 0, 36, "bold", PRIMARY_COLOR);
-                centerText(title.x, title.y + THICKNESS, "CREDITS : $" + credits, 0, 12, "normal", PRIMARY_COLOR);
-
-                centerText(w / 2, h / 2, "SINGLEPLAYER", -20, sBuff, "normal", PRIMARY_COLOR);
-                centerText(w / 2, h / 2, "MULTIPLAYER - todo", 20, usBuff, "normal", PRIMARY_COLOR);
-                centerText(w / 2, h - 2 * THICKNESS - 30, "Use ARROW KEYS and ENTER/SPACEBAR", 0, 12, "normal", PRIMARY_COLOR);
-
+                drawMainMenu(sBuff, usBuff);
                 usBuff--;
                 sBuff++;
             } else {
-                clearScreen();
-                centerText(title.x, title.y, title.text, 0, 36, "bold", PRIMARY_COLOR);
-                centerText(title.x, title.y + THICKNESS, "CREDITS : $" + credits, 0, 12, "normal", PRIMARY_COLOR);
-
-                centerText(w / 2, h / 2, "SINGLEPLAYER", -20, selected, "normal", PRIMARY_COLOR);
-                centerText(w / 2, h / 2, "MULTIPLAYER - todo", 20, unselected, "normal", PRIMARY_COLOR);
-                centerText(w / 2, h - 2 * THICKNESS - 30, "Use ARROW KEYS and ENTER/SPACEBAR", 0, 12, "normal", PRIMARY_COLOR);
+                drawMainMenu(selected, unselected);
             }
         }, 10);
         setTimeout(function() {
@@ -311,24 +304,11 @@ function handleMenuInput(e) {
         // transition singleplayer text to smaller and multiplayer text to bigger
         let menuSwitch = setInterval(function() {
             if (usBuff !== unselected && sBuff !== selected) {
-                clearScreen();
-                centerText(title.x, title.y, title.text, 0, 36, "bold", PRIMARY_COLOR);
-                centerText(title.x, title.y + THICKNESS, "CREDITS : $" + credits, 0, 12, "normal", PRIMARY_COLOR);
-
-                centerText(w / 2, h / 2, "SINGLEPLAYER", -20, usBuff, "normal", PRIMARY_COLOR);
-                centerText(w / 2, h / 2, "MULTIPLAYER - todo", 20, sBuff, "normal", PRIMARY_COLOR);
-                centerText(w / 2, h - 2 * THICKNESS - 30, "Use ARROW KEYS and ENTER/SPACEBAR", 0, 12, "normal", PRIMARY_COLOR);
-
+                drawMainMenu(usBuff, sBuff);
                 usBuff--;
                 sBuff++;
             } else {
-                clearScreen();
-                centerText(title.x, title.y, title.text, 0, 36, "bold", PRIMARY_COLOR);
-                centerText(title.x, title.y + THICKNESS, "CREDITS : $" + credits, 0, 12, "normal", PRIMARY_COLOR);
-
-                centerText(w / 2, h / 2, "SINGLEPLAYER", -20, unselected, "normal", PRIMARY_COLOR);
-                centerText(w / 2, h / 2, "MULTIPLAYER - todo", 20, selected, "normal", PRIMARY_COLOR);
-                centerText(w / 2, h - 2 * THICKNESS - 30, "Use ARROW KEYS and ENTER/SPACEBAR", 0, 12, "normal", PRIMARY_COLOR);
+                drawMainMenu(unselected, selected);
             }
         }, 10);
         setTimeout(function() {
