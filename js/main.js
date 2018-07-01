@@ -70,6 +70,8 @@ function endGameScreen() {
         // Wait for any key press
         ctx.globalAlpha = 1;
         setTimeout(function() {
+            textInput.blur();
+            window.focus();
             centerText(w / 2, h - 2 * THICKNESS - 30, "Press any key to continue", 0, 12, "normal", PRIMARY_COLOR);
             window.addEventListener("keypress", gameComplete);
         }, 1000);
@@ -79,7 +81,10 @@ function endGameScreen() {
 
 
 // Game complete cash reward scene
-function gameComplete() {
+function gameComplete(e) {
+    if(e !== null) {
+        console.log('r');
+    }
     textInput.style.display = "none";
     window.removeEventListener("keypress", gameComplete);
     ctx.globalAlpha = 0;
@@ -174,7 +179,8 @@ function gameComplete() {
                                         centerText(w / 2, h / 2, maxWPM + " highest WPM (bonus " + bonusMaxWPM(maxWPM) + "%)", 80, 24, "normal", PRIMARY_COLOR);
                                         clearInterval(wpmMoneyInc);
                                         setTimeout(function() {
-                                            centerText(w / 2, h - 2 * THICKNESS - 30, "Press any key to continue", 0, 12, "normal", PRIMARY_COLOR);
+                                            centerText(w / 2, h - 2 * THICKNESS - 30, "Press R to Restart", 0, 12, "normal", PRIMARY_COLOR);
+                                            centerText(w / 2, h - 2 * THICKNESS - 30, "Press any other key to return to the Main Menu", 18, 12, "normal", PRIMARY_COLOR);
                                             window.addEventListener("keypress", mainMenu);
                                         }, 1000);
                                     }
@@ -189,53 +195,62 @@ function gameComplete() {
     }, 599);
 }
 
-function mainMenu() {
-    singlePlayerSelected = true;
-    multiPlayerSelected = false;
+function mainMenu(e) {
+    window.removeEventListener("keypress", mainMenu);
+    if (e != null) {
+        console.log(e.keyCode);
+    }
+    console.log(e);
+    if (e != null && e.keyCode === 82) {
+        startGame();
+    } else {
+        singlePlayerSelected = true;
+        multiPlayerSelected = false;
 
-    title = new Word("TypeFall");
-    // TODO - IF ALREADY OPENED BEFORE THERE WILL BE NO ANIMATION
-    title.x = w/2;
-    title.y = -36;
-    title.period = 6;
+        title = new Word("TypeFall");
+        // TODO - IF ALREADY OPENED BEFORE THERE WILL BE NO ANIMATION
+        title.x = w/2;
+        title.y = -36;
+        title.period = 6;
 
-    mmProcess = setInterval(function() {
-        clearScreen();
-        // Title entry animation
-        if (title.y < 2 * THICKNESS) {
-            if (title.y > THICKNESS + THICKNESS / 2) {
-                title.y+=2.5;
-            } else if (title.y > THICKNESS) {
-                title.y+=2.75;
-            } else {
-                title.y+=3;
-            }
-            title.x+=Math.sin(title.y/title.period);
-            centerText(title.x, title.y, title.text, 0, 36, "bold", PRIMARY_COLOR);
-        } else {
-            centerText(title.x, title.y, title.text, 0, 36, "bold", PRIMARY_COLOR);
-            clearInterval(mmProcess);
-            let alphaBuff = 0;
-            let fadeIn = setInterval(function() {
-                clearScreen();
+        mmProcess = setInterval(function() {
+            clearScreen();
+            // Title entry animation
+            if (title.y < 2 * THICKNESS) {
+                if (title.y > THICKNESS + THICKNESS / 2) {
+                    title.y+=2.5;
+                } else if (title.y > THICKNESS) {
+                    title.y+=2.75;
+                } else {
+                    title.y+=3;
+                }
+                title.x+=Math.sin(title.y/title.period);
                 centerText(title.x, title.y, title.text, 0, 36, "bold", PRIMARY_COLOR);
+            } else {
+                centerText(title.x, title.y, title.text, 0, 36, "bold", PRIMARY_COLOR);
+                clearInterval(mmProcess);
+                let alphaBuff = 0;
+                let fadeIn = setInterval(function() {
+                    clearScreen();
+                    centerText(title.x, title.y, title.text, 0, 36, "bold", PRIMARY_COLOR);
 
-                alphaBuff+=0.19999;
-                ctx.globalAlpha = alphaBuff;
-                centerText(w / 2, h / 2, "SINGLEPLAYER", -20, 36, "normal", PRIMARY_COLOR);
-                centerText(w / 2, h / 2, "MULTIPLAYER", 20, 24, "normal", PRIMARY_COLOR);
+                    alphaBuff+=0.19999;
+                    ctx.globalAlpha = alphaBuff;
+                    centerText(w / 2, h / 2, "SINGLEPLAYER", -20, 36, "normal", PRIMARY_COLOR);
+                    centerText(w / 2, h / 2, "MULTIPLAYER - todo", 20, 24, "normal", PRIMARY_COLOR);
 
-                ctx.globalAlpha = 1;
-            }, 100);
-            setTimeout(function() {
-                clearInterval(fadeIn);
-                centerText(w / 2, h - 2 * THICKNESS - 30, "Use ARROW KEYS and ENTER/SPACEBAR", 0, 12, "normal", PRIMARY_COLOR);
+                    ctx.globalAlpha = 1;
+                }, 100);
+                setTimeout(function() {
+                    clearInterval(fadeIn);
+                    centerText(w / 2, h - 2 * THICKNESS - 30, "Use ARROW KEYS and ENTER/SPACEBAR", 0, 12, "normal", PRIMARY_COLOR);
 
-                // Wait for user input
-                window.addEventListener("keydown", handleMenuInput);
-            }, 1000);
-        }
-    }, 50);
+                    // Wait for user input
+                    window.addEventListener("keydown", handleMenuInput);
+                }, 1000);
+            }
+        }, 50);
+    }
 }
 
 function handleMenuInput(e) {
@@ -261,7 +276,7 @@ function handleMenuInput(e) {
                 centerText(title.x, title.y, title.text, 0, 36, "bold", PRIMARY_COLOR);
 
                 centerText(w / 2, h / 2, "SINGLEPLAYER", -20, sBuff, "normal", PRIMARY_COLOR);
-                centerText(w / 2, h / 2, "MULTIPLAYER", 20, usBuff, "normal", PRIMARY_COLOR);
+                centerText(w / 2, h / 2, "MULTIPLAYER - todo", 20, usBuff, "normal", PRIMARY_COLOR);
                 centerText(w / 2, h - 2 * THICKNESS - 30, "Use ARROW KEYS and ENTER/SPACEBAR", 0, 12, "normal", PRIMARY_COLOR);
 
                 usBuff--;
@@ -271,7 +286,7 @@ function handleMenuInput(e) {
                 centerText(title.x, title.y, title.text, 0, 36, "bold", PRIMARY_COLOR);
 
                 centerText(w / 2, h / 2, "SINGLEPLAYER", -20, selected, "normal", PRIMARY_COLOR);
-                centerText(w / 2, h / 2, "MULTIPLAYER", 20, unselected, "normal", PRIMARY_COLOR);
+                centerText(w / 2, h / 2, "MULTIPLAYER - todo", 20, unselected, "normal", PRIMARY_COLOR);
                 centerText(w / 2, h - 2 * THICKNESS - 30, "Use ARROW KEYS and ENTER/SPACEBAR", 0, 12, "normal", PRIMARY_COLOR);
             }
         }, 10);
@@ -291,7 +306,7 @@ function handleMenuInput(e) {
                 centerText(title.x, title.y, title.text, 0, 36, "bold", PRIMARY_COLOR);
 
                 centerText(w / 2, h / 2, "SINGLEPLAYER", -20, usBuff, "normal", PRIMARY_COLOR);
-                centerText(w / 2, h / 2, "MULTIPLAYER", 20, sBuff, "normal", PRIMARY_COLOR);
+                centerText(w / 2, h / 2, "MULTIPLAYER - todo", 20, sBuff, "normal", PRIMARY_COLOR);
                 centerText(w / 2, h - 2 * THICKNESS - 30, "Use ARROW KEYS and ENTER/SPACEBAR", 0, 12, "normal", PRIMARY_COLOR);
 
                 usBuff--;
@@ -301,7 +316,7 @@ function handleMenuInput(e) {
                 centerText(title.x, title.y, title.text, 0, 36, "bold", PRIMARY_COLOR);
 
                 centerText(w / 2, h / 2, "SINGLEPLAYER", -20, unselected, "normal", PRIMARY_COLOR);
-                centerText(w / 2, h / 2, "MULTIPLAYER", 20, selected, "normal", PRIMARY_COLOR);
+                centerText(w / 2, h / 2, "MULTIPLAYER - todo", 20, selected, "normal", PRIMARY_COLOR);
                 centerText(w / 2, h - 2 * THICKNESS - 30, "Use ARROW KEYS and ENTER/SPACEBAR", 0, 12, "normal", PRIMARY_COLOR);
             }
         }, 10);
@@ -321,11 +336,11 @@ function handleMenuInput(e) {
     // If enter
     //TODO
     if (e.keyCode === enter) {
-        window.removeEventListener("keydown", handleMenuInput);
         if (singlePlayerSelected) {
+            window.removeEventListener("keydown", handleMenuInput);
             startGame();
         } else if (multiPlayerSelected) {
-
+            //TODO
         }
     }
 }
